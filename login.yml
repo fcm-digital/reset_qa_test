@@ -3,7 +3,7 @@ name: Log in to recover the Bearer
 on: [ push ]
 
 jobs:
-  create_issue:
+  login:
     runs-on: ubuntu-latest
     permissions:
       issues: write
