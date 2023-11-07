@@ -1,0 +1,20 @@
+name: Log in to recover the Bearer
+
+on: [ push ]
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://sandbox.bff.meetsam.io/graphql
+          --header 'API-Version: 2022-06-03' \
+          --header 'Content-Type: application/json' \
+          --data '{
+            "query":"mutation($email: String!, $password: String!){\nlogin(input: { email: $email, password: $password }) {\n    ok\n   \tsession {\n      travelerGuid\n      tester\n      companyGuid\n      token\n    }\n    # profile\n    traveler {\n        id\n        emailAddress\n    }\n  }\n}","variables":{"email":"qafourth.qa4.manager@demo.fcmtravel.com","password":"sA{;D1K8Oud]2DQ"}
+            }' \
+          --fail
